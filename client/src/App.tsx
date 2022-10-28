@@ -9,11 +9,12 @@ import Footer from "./components/Footer/Footer";
 import Wrapper from "./components/Wrapper/Wrapper";
 import OptionsBox from "./components/OptionsBox/Options";
 import Chart from "./components/Chart/Chart";
+import { ModalCtx } from "./features/modal-ctx";
 
 const App: React.FC = () => {
   const tickerMgr = useContext(TickerCtx);
+  const modalMgr = useContext(ModalCtx);
 
-  let [showModal, setShowModal] = useState<boolean>(false);
   let [invalid, setInvalid] = useState<boolean>(false);
   let [dataArr, setDataArr] = useState<dataArrInterface[]>([
     { date: "any", value: "any" },
@@ -42,8 +43,8 @@ const App: React.FC = () => {
 
   return (
     <React.Fragment>
-      {showModal && <Modal setShowModal={setShowModal} />}
-      <Header setShowModal={setShowModal} />
+      {modalMgr.state.showModal && <Modal />}
+      <Header />
       <Wrapper>
         <OptionsBox />
         <Selection invalid={invalid} />

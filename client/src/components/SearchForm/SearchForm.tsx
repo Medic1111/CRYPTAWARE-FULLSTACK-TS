@@ -2,7 +2,7 @@ import classes from "./SearchForm.module.css";
 import { useState, useContext } from "react";
 import { TickerCtx } from "../../features/ticker-ctx";
 
-const SearchForm = () => {
+const SearchForm: React.FC = () => {
   const [userInput, setUserInput] = useState<string>("");
   const tickerMgr = useContext(TickerCtx);
 

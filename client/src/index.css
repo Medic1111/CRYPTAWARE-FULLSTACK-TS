@@ -27,6 +27,10 @@ body {
   color: hsl(327, 100%, 50%);
   font-size: 2em;
 }
+.iconBtn {
+  font-size: 2.7em;
+  cursor: pointer;
+}
 
 @media (max-width: 798px) {
   html {

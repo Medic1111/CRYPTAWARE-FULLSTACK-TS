@@ -23,29 +23,15 @@ const App: React.FC = () => {
     let cancelToken = axios.CancelToken.source();
 
     await axios
-      .get(
-        `https://www.alphavantage.co/query?function=CRYPTO_INTRADAY&symbol=${tickerMgr.ticker}&market=USD&interval=15min&apikey=${process.env.REACT_APP_API_KEY}`,
-        { cancelToken: cancelToken.token }
-      )
-      .then((serverRes) => {
-        if (serverRes.data["Error Message"]) {
-          setDataArr([]);
-          return setInvalid(true);
-        } else {
-          setInvalid(false);
-          let data = serverRes.data["Time Series Crypto (15min)"];
-          let structured: dataArrInterface[] = [];
-          Object.keys(data).forEach((key) => {
-            structured.push(data[key]);
-          });
-          setDataArr(structured);
-        }
-      })
-      .catch((err) =>
+      .get(`/api/v1/${tickerMgr.ticker}`, { cancelToken: cancelToken.token })
+      .then((serverRes) => setDataArr(serverRes.data))
+      .catch((err) => {
         axios.isCancel(err)
           ? console.log("Request cancelled")
-          : console.log(err)
-      );
+          : console.log(err);
+        setDataArr([]);
+        return setInvalid(true);
+      });
 
     return () => cancelToken.cancel();
   };

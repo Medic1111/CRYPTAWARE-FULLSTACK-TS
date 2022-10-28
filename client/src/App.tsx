@@ -46,6 +46,7 @@ const App: React.FC = () => {
       {modalMgr.state.showModal && <Modal />}
       <Header />
       <Wrapper>
+        {/* AUTH GOES INSIDE WRAPPER */}
         <OptionsBox />
         <Selection invalid={invalid} />
         <Chart data={dataArr} />

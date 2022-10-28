@@ -6,14 +6,14 @@ interface Value {
 }
 
 export const UserCtx = createContext<Value>({
-  isAuth: false,
+  isAuth: true,
   setIsAuth: () => {},
 });
 
 const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
 
   return (
     <UserCtx.Provider

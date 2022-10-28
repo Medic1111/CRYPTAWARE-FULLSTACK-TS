@@ -1,0 +1,21 @@
+.article {
+  width: 100%;
+  padding: 0 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1em;
+  height: 10vh;
+  margin: 5vh 0;
+}
+.test {
+  color: aliceblue;
+}
+
+@media (max-width: 798px) {
+  .article {
+    height: 15vh;
+    padding: 0 2.5%;
+  }
+}

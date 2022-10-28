@@ -1,0 +1,52 @@
+/* From uiverse.io by @satyamchaudharydev */
+.form {
+  --width-of-input: 200px;
+  --border-height: 1px;
+  --border-before-color: rgb(220, 197, 236);
+  --border-after-color: hsl(327, 100%, 50%);
+  --input-hovered-color: #16161684;
+  position: relative;
+  width: var(--width-of-input);
+}
+/* styling of Input */
+.input {
+  color: #fff;
+  color: rgb(220, 197, 236);
+  font-size: 1.3rem;
+  background-color: transparent;
+  width: 100%;
+  box-sizing: border-box;
+  padding-inline: 0.5em;
+  padding-block: 0.7em;
+  border: none;
+  border-bottom: var(--border-height) solid var(--border-before-color);
+  text-transform: uppercase;
+}
+/* styling of animated border */
+.inputBorder {
+  position: absolute;
+  background: var(--border-after-color);
+  width: 0%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  transition: 0.3s;
+}
+/* Hover on Input */
+.input:hover {
+  background: var(--input-hovered-color);
+}
+
+.input:focus {
+  outline: none;
+}
+/* here is code of animated border */
+.input:focus ~ .inputBorder {
+  width: 100%;
+}
+
+@media (max-width: 798px) {
+  .form {
+    display: none;
+  }
+}

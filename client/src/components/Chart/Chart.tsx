@@ -1,17 +1,16 @@
 import * as R from "recharts";
 import classes from "./Chart.module.css";
 import { dataArrInterface } from "../../models/AppInterface";
+import { useContext } from "react";
+import { SelectionCtx } from "../../features/selection-ctx";
 
 interface Props {
   data: dataArrInterface[];
-  selectionState: {
-    trend: boolean;
-    diff: boolean;
-    compound: boolean;
-  };
 }
 
-const Chart: React.FC<Props> = ({ data, selectionState }) => {
+const Chart: React.FC<Props> = ({ data }) => {
+  const selMgr = useContext(SelectionCtx);
+
   return (
     <div className={classes.chart}>
       <R.ResponsiveContainer width="100%" height="100%">
@@ -19,7 +18,7 @@ const Chart: React.FC<Props> = ({ data, selectionState }) => {
           margin={{ top: 25, right: 20, bottom: 5, left: 20 }}
           data={data}
         >
-          {selectionState.trend && (
+          {selMgr.SelState.trend && (
             <>
               <R.Line type="monotone" dataKey="1. open" stroke="#0dd936" />
               <R.Line type="monotone" dataKey="4. close" stroke="#d9650d" />
@@ -37,7 +36,7 @@ const Chart: React.FC<Props> = ({ data, selectionState }) => {
           />
           <R.Tooltip />
           <R.Legend />
-          {selectionState.diff && (
+          {selMgr.SelState.diff && (
             <>
               <R.Bar dataKey="3. low" barSize={10} fill="#d90dbe" />
               <R.Bar dataKey="2. high" barSize={10} fill="#0dd9d2" />

@@ -1,14 +1,15 @@
 import classes from "./Selection.module.css";
 import { useContext } from "react";
 import { TickerCtx } from "../../features/ticker-ctx";
+import { SelectionCtx } from "../../features/selection-ctx";
 
-import { SelectionAction } from "../../reducers/selection-red";
-
-const Selection: React.FC<{
+interface Props {
   invalid: boolean;
-  selectionDispatch: React.Dispatch<SelectionAction>;
-}> = ({ invalid, selectionDispatch }) => {
+}
+
+const Selection: React.FC<Props> = ({ invalid }) => {
   const tickerMgr = useContext(TickerCtx);
+  const selMgr = useContext(SelectionCtx);
 
   return (
     <section className={classes.section}>
@@ -22,37 +23,37 @@ const Selection: React.FC<{
 
       <div className={classes.filterBox}>
         <p
-          onClick={() => selectionDispatch({ type: "TREND" })}
+          onClick={() => selMgr.SelDispatch({ type: "TREND" })}
           className={classes.p}
         >
           TREND
         </p>
         <p
-          onClick={() => selectionDispatch({ type: "TREND" })}
+          onClick={() => selMgr.SelDispatch({ type: "TREND" })}
           className={classes.mobile}
         >
           T
         </p>
         <p
-          onClick={() => selectionDispatch({ type: "DIFF" })}
+          onClick={() => selMgr.SelDispatch({ type: "DIFF" })}
           className={classes.p}
         >
           DIFF
         </p>
         <p
-          onClick={() => selectionDispatch({ type: "DIFF" })}
+          onClick={() => selMgr.SelDispatch({ type: "DIFF" })}
           className={classes.mobile}
         >
           D
         </p>
         <p
-          onClick={() => selectionDispatch({ type: "COMPOUND" })}
+          onClick={() => selMgr.SelDispatch({ type: "COMPOUND" })}
           className={classes.p}
         >
           COMPOUND
         </p>
         <p
-          onClick={() => selectionDispatch({ type: "COMPOUND" })}
+          onClick={() => selMgr.SelDispatch({ type: "COMPOUND" })}
           className={classes.mobile}
         >
           C

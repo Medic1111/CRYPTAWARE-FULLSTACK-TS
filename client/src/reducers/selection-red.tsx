@@ -3,7 +3,7 @@ export type SelectionAction =
   | { type: "DIFF" }
   | { type: "COMPOUND" };
 
-type SelectionState = {
+export type SelectionState = {
   trend: boolean;
   diff: boolean;
   compound: boolean;

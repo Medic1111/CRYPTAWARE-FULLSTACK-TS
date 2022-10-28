@@ -9,15 +9,8 @@ import Footer from "./components/Footer/Footer";
 import Wrapper from "./components/Wrapper/Wrapper";
 import OptionsBox from "./components/OptionsBox/Options";
 import Chart from "./components/Chart/Chart";
-import SelectionReducer from "./reducers/selection-red";
-import { SelectionInitialState } from "./reducers/selection-red";
 
 const App: React.FC = () => {
-  const [selectionState, selectionDispatch] = useReducer(
-    SelectionReducer,
-    SelectionInitialState
-  );
-
   const tickerMgr = useContext(TickerCtx);
 
   let [showModal, setShowModal] = useState<boolean>(false);
@@ -67,8 +60,8 @@ const App: React.FC = () => {
       <Header setShowModal={setShowModal} />
       <Wrapper>
         <OptionsBox />
-        <Selection invalid={invalid} selectionDispatch={selectionDispatch} />
-        <Chart data={dataArr} selectionState={selectionState} />
+        <Selection invalid={invalid} />
+        <Chart data={dataArr} />
       </Wrapper>
       <Footer />
     </React.Fragment>

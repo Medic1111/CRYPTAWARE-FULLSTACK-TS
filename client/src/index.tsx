@@ -5,14 +5,14 @@ import App from "./App";
 import TickerProvider from "./features/ticker-ctx";
 import SelectionCtxProvider from "./features/selection-ctx";
 import ModalProvider from "./features/modal-ctx";
-import UserProvider from "./features/user-ctx";
+import AuthProvider from "./features/auth-ctx";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <UserProvider>
+    <AuthProvider>
       <ModalProvider>
         <SelectionCtxProvider>
           <TickerProvider>
@@ -20,6 +20,6 @@ root.render(
           </TickerProvider>
         </SelectionCtxProvider>
       </ModalProvider>
-    </UserProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

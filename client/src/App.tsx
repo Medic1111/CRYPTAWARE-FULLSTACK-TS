@@ -10,13 +10,13 @@ import Wrapper from "./components/Wrapper/Wrapper";
 import OptionsBox from "./components/OptionsBox/Options";
 import Chart from "./components/Chart/Chart";
 import { ModalCtx } from "./features/modal-ctx";
-import { UserCtx } from "./features/user-ctx";
+import { AuthCtx } from "./features/auth-ctx";
 import Auth from "./components/Auth/Auth";
 
 const App: React.FC = () => {
   const tickerMgr = useContext(TickerCtx);
   const modalMgr = useContext(ModalCtx);
-  const userMgr = useContext(UserCtx);
+  const authMgr = useContext(AuthCtx);
 
   let [invalid, setInvalid] = useState<boolean>(false);
   let [dataArr, setDataArr] = useState<dataArrInterface[]>([
@@ -24,7 +24,7 @@ const App: React.FC = () => {
   ]);
 
   useEffect(() => {
-    userMgr.isTokenExp();
+    authMgr.isTokenExp();
   }, [tickerMgr.ticker, tickerMgr.tickerArr]);
 
   const fetchApi = async () => {
@@ -53,7 +53,7 @@ const App: React.FC = () => {
       {modalMgr.state.showModal && <Modal />}
       <Header />
       <Wrapper>
-        {userMgr.isAuth ? (
+        {authMgr.isAuth ? (
           <>
             <OptionsBox />
             <Selection invalid={invalid} />

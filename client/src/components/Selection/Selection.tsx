@@ -1,5 +1,5 @@
 import classes from "./Selection.module.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TickerCtx } from "../../features/ticker-ctx";
 import { SelectionCtx } from "../../features/selection-ctx";
 
@@ -10,7 +10,8 @@ interface Props {
 const Selection: React.FC<Props> = ({ invalid }) => {
   const tickerMgr = useContext(TickerCtx);
   const selMgr = useContext(SelectionCtx);
-
+  // TEST
+  const [bookmarked, setBookMarked] = useState<boolean>(false);
   return (
     <section className={classes.section}>
       {invalid ? (
@@ -58,6 +59,12 @@ const Selection: React.FC<Props> = ({ invalid }) => {
         >
           C
         </p>
+        <span
+          onClick={() => setBookMarked((prev) => !prev)}
+          className="material-symbols-outlined iconSelection"
+        >
+          {bookmarked ? "bookmark_added" : "bookmark_add"}
+        </span>
       </div>
     </section>
   );

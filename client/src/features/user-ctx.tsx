@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
 import { Credentials } from "../models/Credentials";
+import axios from "axios";
 
 interface Value {
   isAuth: boolean;
@@ -11,6 +12,8 @@ interface Value {
   setCredentials: React.Dispatch<React.SetStateAction<Credentials>>;
   resetCredentials: () => void;
   onCredentialsChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  authHandler: (e: React.FormEvent<HTMLInputElement>) => void;
+  isTokenExp: () => void;
 }
 
 export const UserCtx = createContext<Value>({
@@ -23,6 +26,8 @@ export const UserCtx = createContext<Value>({
   setCredentials: () => {},
   resetCredentials: () => {},
   onCredentialsChange: (e) => {},
+  authHandler: (e) => {},
+  isTokenExp: () => {},
 });
 
 const UserProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -55,6 +60,50 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const authHandler = async (e: React.FormEvent<HTMLInputElement>) => {
+    let cancelToken = axios.CancelToken.source();
+
+    let url: string;
+    isLoggin ? (url = "login") : (url = "register");
+
+    e.preventDefault();
+    axios
+      .post(
+        `/api/v1/${url}`,
+        { user: credentials },
+        { cancelToken: cancelToken.token }
+      )
+      .then((serverRes) => {
+        setIsAuth(true);
+
+        const myExp = new Date(new Date().getTime() + 161 * 60 * 60);
+        localStorage.setItem(
+          "userValidation",
+          JSON.stringify({
+            username: serverRes.data.username,
+            token: serverRes.data.token,
+            expiration: myExp.toISOString(),
+          })
+        );
+      })
+      .catch((err) => {
+        axios.isCancel(err)
+          ? console.log("Request cancelled")
+          : console.log(err);
+      });
+
+    return () => cancelToken.cancel();
+  };
+
+  const isTokenExp = () => {
+    const storedData = JSON.parse(localStorage.getItem("userValidation") || "");
+    if (storedData && new Date(storedData.expiration) > new Date()) {
+      return setIsAuth(true);
+    } else {
+      return setIsAuth(false);
+    }
+  };
+
   return (
     <UserCtx.Provider
       value={{
@@ -67,6 +116,8 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         setCredentials,
         resetCredentials: resetCredentials,
         onCredentialsChange: onCredentialsChange,
+        authHandler,
+        isTokenExp,
       }}
     >
       {children}

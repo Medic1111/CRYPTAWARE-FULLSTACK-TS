@@ -6,43 +6,6 @@ import classes from "./Auth.module.css";
 const Auth: React.FC = () => {
   const userMgr = useContext(UserCtx);
 
-  const ApiLogin = async (e: React.FormEvent<HTMLInputElement>) => {
-    let cancelToken = axios.CancelToken.source();
-
-    let url: string;
-    userMgr.isLoggin ? (url = "login") : (url = "register");
-
-    e.preventDefault();
-    axios
-      .post(
-        `/api/v1/${url}`,
-        { user: userMgr.credentials },
-        { cancelToken: cancelToken.token }
-      )
-      .then((serverRes) => {
-        console.log(serverRes);
-        userMgr.setIsAuth(true);
-
-        // LOCAL STORAGE:
-        const myExp = new Date(new Date().getTime() + 161 * 60 * 60);
-        localStorage.setItem(
-          "userValidation",
-          JSON.stringify({
-            username: serverRes.data.username,
-            token: serverRes.data.token,
-            expiration: myExp.toISOString(),
-          })
-        );
-      })
-      .catch((err) => {
-        axios.isCancel(err)
-          ? console.log("Request cancelled")
-          : console.log(err);
-      });
-
-    return () => cancelToken.cancel();
-  };
-
   return (
     <article className={classes.article}>
       <form className={classes.form}>
@@ -77,7 +40,7 @@ const Auth: React.FC = () => {
           onChange={userMgr.onCredentialsChange}
         />
         <input
-          onClick={ApiLogin}
+          onClick={userMgr.authHandler}
           className={classes.submit}
           type="submit"
           value={userMgr.isLoggin ? "Login" : "Register"}

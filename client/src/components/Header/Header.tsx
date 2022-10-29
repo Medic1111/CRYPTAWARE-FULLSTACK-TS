@@ -33,7 +33,12 @@ const Header: React.FC = () => {
           >
             sticky_note_2
           </span>
-          <span className="material-symbols-outlined iconBtn">logout</span>
+          <span
+            onClick={() => userMgr.logout()}
+            className="material-symbols-outlined iconBtn"
+          >
+            logout
+          </span>
         </div>
       )}
     </header>

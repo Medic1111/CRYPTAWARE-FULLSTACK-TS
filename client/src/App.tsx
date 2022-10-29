@@ -10,10 +10,13 @@ import Wrapper from "./components/Wrapper/Wrapper";
 import OptionsBox from "./components/OptionsBox/Options";
 import Chart from "./components/Chart/Chart";
 import { ModalCtx } from "./features/modal-ctx";
+import { UserCtx } from "./features/user-ctx";
+import Auth from "./components/Auth/Auth";
 
 const App: React.FC = () => {
   const tickerMgr = useContext(TickerCtx);
   const modalMgr = useContext(ModalCtx);
+  const userMgr = useContext(UserCtx);
 
   let [invalid, setInvalid] = useState<boolean>(false);
   let [dataArr, setDataArr] = useState<dataArrInterface[]>([
@@ -47,9 +50,15 @@ const App: React.FC = () => {
       <Header />
       <Wrapper>
         {/* AUTH GOES INSIDE WRAPPER */}
-        <OptionsBox />
-        <Selection invalid={invalid} />
-        <Chart data={dataArr} />
+        {userMgr.isAuth ? (
+          <>
+            <OptionsBox />
+            <Selection invalid={invalid} />
+            <Chart data={dataArr} />
+          </>
+        ) : (
+          <Auth />
+        )}
       </Wrapper>
       <Footer />
     </React.Fragment>

@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { dataArrInterface } from "./models/AppInterface";
+import React, { useEffect, useContext } from "react";
 import { TickerCtx } from "./features/ticker-ctx";
 import Selection from "./components/Selection/Selection";
 import Modal from "./components/Modal/Modal";
@@ -12,40 +10,20 @@ import Chart from "./components/Chart/Chart";
 import { ModalCtx } from "./features/modal-ctx";
 import { AuthCtx } from "./features/auth-ctx";
 import Auth from "./components/Auth/Auth";
+import { ChartCtx } from "./features/chart-ctx";
 
 const App: React.FC = () => {
   const tickerMgr = useContext(TickerCtx);
   const modalMgr = useContext(ModalCtx);
   const authMgr = useContext(AuthCtx);
-
-  let [invalid, setInvalid] = useState<boolean>(false);
-  let [dataArr, setDataArr] = useState<dataArrInterface[]>([
-    { date: "any", value: "any" },
-  ]);
+  const chartMgr = useContext(ChartCtx);
 
   useEffect(() => {
     authMgr.isTokenExp();
   }, [tickerMgr.ticker, tickerMgr.tickerArr]);
 
-  const fetchApi = async () => {
-    let cancelToken = axios.CancelToken.source();
-
-    await axios
-      .get(`/api/v1/${tickerMgr.ticker}`, { cancelToken: cancelToken.token })
-      .then((serverRes) => setDataArr(serverRes.data))
-      .catch((err) => {
-        axios.isCancel(err)
-          ? console.log("Request cancelled")
-          : console.log(err);
-        setDataArr([]);
-        return setInvalid(true);
-      });
-
-    return () => cancelToken.cancel();
-  };
-
   useEffect(() => {
-    fetchApi();
+    chartMgr.fetchApi();
   }, [tickerMgr.ticker]);
 
   return (
@@ -56,8 +34,8 @@ const App: React.FC = () => {
         {authMgr.isAuth ? (
           <>
             <OptionsBox />
-            <Selection invalid={invalid} />
-            <Chart data={dataArr} />
+            <Selection />
+            <Chart />
           </>
         ) : (
           <Auth />

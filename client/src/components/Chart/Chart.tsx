@@ -1,22 +1,19 @@
 import * as R from "recharts";
 import classes from "./Chart.module.css";
-import { dataArrInterface } from "../../models/AppInterface";
 import { useContext } from "react";
 import { SelectionCtx } from "../../features/selection-ctx";
+import { ChartCtx } from "../../features/chart-ctx";
 
-interface Props {
-  data: dataArrInterface[];
-}
-
-const Chart: React.FC<Props> = ({ data }) => {
+const Chart: React.FC = () => {
   const selMgr = useContext(SelectionCtx);
+  const chartMgr = useContext(ChartCtx);
 
   return (
     <div className={classes.chart}>
       <R.ResponsiveContainer width="100%" height="100%">
         <R.ComposedChart
           margin={{ top: 25, right: 20, bottom: 5, left: 20 }}
-          data={data}
+          data={chartMgr.dataArr}
         >
           {selMgr.SelState.trend && (
             <>

@@ -21,7 +21,7 @@ const Auth: React.FC = () => {
       )
       .then((serverRes) => {
         console.log(serverRes);
-        // userMgr.setIsAuth(true)
+        userMgr.setIsAuth(true);
       })
       .catch((err) => {
         axios.isCancel(err)

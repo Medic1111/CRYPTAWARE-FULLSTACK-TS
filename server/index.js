@@ -21,91 +21,16 @@ mongoose.connect(`${process.env.DB_URI}`, (err) =>
 
 // PERSONAL Routes:
 const fetchRoute = require("./routes/fetch");
+const loginRoute = require("./routes/login");
+const registerRoute = require("./routes/register");
 // AUTHENTICATION: Login/Register: Bcrypt and Send Token
 
 // PERSONAL Middlewares
 app.use("/", fetchRoute);
+app.use("/", loginRoute);
+app.use("/", registerRoute);
 
-app.post("/api/v1/register", (req, res) => {
-  const { email, username, password } = req.body.user;
-
-  User.findOne(
-    { $or: [{ username: username }, { email: email }] },
-    (err, doc) => {
-      if (err) {
-        return res.status(500).json({ message: "Oops, something went wrong" });
-      }
-
-      if (doc) {
-        return res
-          .status(409)
-          .json({ message: "Username or Email already registered" });
-      }
-
-      const hash = bcrypt.hashSync(password, 10);
-      const newUser = new User({
-        email,
-        username,
-        password: hash,
-      });
-
-      newUser.save((err, doc) => {
-        if (err) {
-          return res
-            .status(500)
-            .json({ message: "Oops, something went wrong" });
-        }
-
-        let token = jwt.sign({ username }, `${process.env.TOKEN_SECRET}`, {
-          expiresIn: "600s",
-        });
-
-        res.status(201).json({
-          username: doc.username,
-          bookmarkList: doc.bookmarkList,
-          notes: doc.notes,
-          token,
-        });
-      });
-    }
-  );
-});
-
-app.post("/api/v1/login", (req, res) => {
-  const { email, username, password } = req.body.user;
-  User.findOne({ username: username }, (err, doc) => {
-    if (err) {
-      return res.status(500).json({ message: "Oops, something went wrong" });
-    }
-
-    if (!doc) {
-      return res.status(404).json({ message: "Username not registered" });
-    }
-
-    bcrypt.compare(password, doc.password, (err, match) => {
-      if (err) {
-        return res
-          .status(500)
-          .json({ message: "Oops, something went wrong with your request" });
-      }
-      if (!match) {
-        return res.status(403).json({ message: "Not Auth" });
-      }
-
-      let token = jwt.sign({ username }, `${process.env.TOKEN_SECRET}`, {
-        expiresIn: "600s",
-      });
-
-      res.status(201).json({
-        username: doc.username,
-        bookmarkList: doc.bookmarkList,
-        notes: doc.notes,
-        token,
-      });
-    });
-  });
-  //
-});
+// DEV TESTING:
 
 // UNIVERSAL
 app.get("*", (req, res) => {

@@ -33,6 +33,10 @@ body {
   font-size: 2.7em;
   cursor: pointer;
 }
+.iconSelection {
+  color: #fcfafc;
+  cursor: pointer;
+}
 
 @media (max-width: 798px) {
   html {

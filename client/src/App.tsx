@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useReducer } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { dataArrInterface } from "./models/AppInterface";
 import { TickerCtx } from "./features/ticker-ctx";
@@ -49,7 +49,6 @@ const App: React.FC = () => {
       {modalMgr.state.showModal && <Modal />}
       <Header />
       <Wrapper>
-        {/* AUTH GOES INSIDE WRAPPER */}
         {userMgr.isAuth ? (
           <>
             <OptionsBox />

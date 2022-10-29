@@ -1,9 +1,36 @@
-import { useContext } from "react";
+import axios from "axios";
+import React, { useContext } from "react";
 import { UserCtx } from "../../features/user-ctx";
 import classes from "./Auth.module.css";
 
 const Auth: React.FC = () => {
   const userMgr = useContext(UserCtx);
+
+  const ApiLogin = async (e: React.FormEvent<HTMLInputElement>) => {
+    let cancelToken = axios.CancelToken.source();
+
+    let url: string;
+    userMgr.isLoggin ? (url = "login") : (url = "register");
+
+    e.preventDefault();
+    axios
+      .post(
+        `/api/v1/${url}`,
+        { user: userMgr.credentials },
+        { cancelToken: cancelToken.token }
+      )
+      .then((serverRes) => {
+        console.log(serverRes);
+        // userMgr.setIsAuth(true)
+      })
+      .catch((err) => {
+        axios.isCancel(err)
+          ? console.log("Request cancelled")
+          : console.log(err);
+      });
+
+    return () => cancelToken.cancel();
+  };
 
   return (
     <article className={classes.article}>
@@ -39,7 +66,7 @@ const Auth: React.FC = () => {
           onChange={userMgr.onCredentialsChange}
         />
         <input
-          onClick={() => userMgr.setIsAuth(true)}
+          onClick={ApiLogin}
           className={classes.submit}
           type="submit"
           value={userMgr.isLoggin ? "Login" : "Register"}
@@ -51,7 +78,7 @@ const Auth: React.FC = () => {
           }}
           className={classes.span}
         >
-          {!userMgr.isLoggin
+          {userMgr.isLoggin
             ? "Not registered? Register now"
             : " Already registered? Login now"}
         </span>

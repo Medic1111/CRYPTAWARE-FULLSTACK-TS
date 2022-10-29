@@ -22,6 +22,17 @@ const Auth: React.FC = () => {
       .then((serverRes) => {
         console.log(serverRes);
         userMgr.setIsAuth(true);
+
+        // LOCAL STORAGE:
+        const myExp = new Date(new Date().getTime() + 161 * 60 * 60);
+        localStorage.setItem(
+          "userValidation",
+          JSON.stringify({
+            username: serverRes.data.username,
+            token: serverRes.data.token,
+            expiration: myExp.toISOString(),
+          })
+        );
       })
       .catch((err) => {
         axios.isCancel(err)

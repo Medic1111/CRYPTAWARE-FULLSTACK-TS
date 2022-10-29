@@ -14,15 +14,15 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <ChartProvider>
-        <ModalProvider>
-          <SelectionCtxProvider>
-            <TickerProvider>
+      <ModalProvider>
+        <SelectionCtxProvider>
+          <TickerProvider>
+            <ChartProvider>
               <App />
-            </TickerProvider>
-          </SelectionCtxProvider>
-        </ModalProvider>
-      </ChartProvider>
+            </ChartProvider>
+          </TickerProvider>
+        </SelectionCtxProvider>
+      </ModalProvider>
     </AuthProvider>
   </React.StrictMode>
 );

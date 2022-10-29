@@ -1,23 +1,23 @@
 import axios from "axios";
 import React, { useContext } from "react";
-import { UserCtx } from "../../features/user-ctx";
+import { AuthCtx } from "../../features/auth-ctx";
 import classes from "./Auth.module.css";
 
 const Auth: React.FC = () => {
-  const userMgr = useContext(UserCtx);
+  const authMgr = useContext(AuthCtx);
 
   return (
     <article className={classes.article}>
       <form className={classes.form}>
-        {userMgr.isLoggin || (
+        {authMgr.isLoggin || (
           <input
             className={classes.input}
             type="email"
             placeholder="Email"
             required
-            value={userMgr.credentials.email}
+            value={authMgr.credentials.email}
             name="email"
-            onChange={userMgr.onCredentialsChange}
+            onChange={authMgr.onCredentialsChange}
           />
         )}
         <input
@@ -25,9 +25,9 @@ const Auth: React.FC = () => {
           type="text"
           placeholder="Username"
           required
-          value={userMgr.credentials.username}
+          value={authMgr.credentials.username}
           name="username"
-          onChange={userMgr.onCredentialsChange}
+          onChange={authMgr.onCredentialsChange}
         />
         <input
           className={classes.input}
@@ -35,24 +35,24 @@ const Auth: React.FC = () => {
           placeholder="Password"
           min={6}
           required
-          value={userMgr.credentials.password}
+          value={authMgr.credentials.password}
           name="password"
-          onChange={userMgr.onCredentialsChange}
+          onChange={authMgr.onCredentialsChange}
         />
         <input
-          onClick={userMgr.authHandler}
+          onClick={authMgr.authHandler}
           className={classes.submit}
           type="submit"
-          value={userMgr.isLoggin ? "Login" : "Register"}
+          value={authMgr.isLoggin ? "Login" : "Register"}
         />
         <span
           onClick={() => {
-            userMgr.resetCredentials();
-            userMgr.setIsLoggin((prev) => !prev);
+            authMgr.resetCredentials();
+            authMgr.setIsLoggin((prev) => !prev);
           }}
           className={classes.span}
         >
-          {userMgr.isLoggin
+          {authMgr.isLoggin
             ? "Not registered? Register now"
             : " Already registered? Login now"}
         </span>

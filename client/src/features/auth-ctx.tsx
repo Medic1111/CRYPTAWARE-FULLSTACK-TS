@@ -16,7 +16,7 @@ interface Value {
   isTokenExp: () => void;
 }
 
-export const UserCtx = createContext<Value>({
+export const AuthCtx = createContext<Value>({
   isAuth: false,
   setIsAuth: () => {},
   logout: () => {},
@@ -30,7 +30,7 @@ export const UserCtx = createContext<Value>({
   isTokenExp: () => {},
 });
 
-const UserProvider: React.FC<{ children: React.ReactNode }> = ({
+const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [isAuth, setIsAuth] = useState(false);
@@ -50,7 +50,9 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     });
 
   const logout = () => {
+    localStorage.removeItem("userValidation");
     setIsAuth(false);
+    resetCredentials();
   };
 
   const onCredentialsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,16 +98,21 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const isTokenExp = () => {
-    const storedData = JSON.parse(localStorage.getItem("userValidation") || "");
-    if (storedData && new Date(storedData.expiration) > new Date()) {
-      return setIsAuth(true);
-    } else {
-      return setIsAuth(false);
+    const storedData = localStorage.getItem("userValidation");
+
+    if (typeof storedData === "string") {
+      const parse = JSON.parse(storedData);
+
+      if (parse && new Date(parse.expiration) > new Date()) {
+        return setIsAuth(true);
+      } else {
+        return setIsAuth(false);
+      }
     }
   };
 
   return (
-    <UserCtx.Provider
+    <AuthCtx.Provider
       value={{
         isAuth,
         setIsAuth: setIsAuth,
@@ -121,8 +128,8 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({
       }}
     >
       {children}
-    </UserCtx.Provider>
+    </AuthCtx.Provider>
   );
 };
 
-export default UserProvider;
+export default AuthProvider;

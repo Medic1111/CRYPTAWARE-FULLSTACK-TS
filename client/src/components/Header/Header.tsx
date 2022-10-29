@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import { ModalCtx } from "../../features/modal-ctx";
-import { UserCtx } from "../../features/user-ctx";
+import { AuthCtx } from "../../features/auth-ctx";
 import SearchForm from "../SearchForm/SearchForm";
 import classes from "./Header.module.css";
 
 const Header: React.FC = () => {
   const modalMgr = useContext(ModalCtx);
-  const userMgr = useContext(UserCtx);
+  const authMgr = useContext(AuthCtx);
   return (
     <header className={classes.header}>
       <h1 className={classes.h1}>CRYPTAWARE</h1>
-      {userMgr.isAuth && (
+      {authMgr.isAuth && (
         <div className={classes.iconBox}>
           <SearchForm />
           <button
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
             sticky_note_2
           </span>
           <span
-            onClick={() => userMgr.logout()}
+            onClick={() => authMgr.logout()}
             className="material-symbols-outlined iconBtn"
           >
             logout

@@ -25,6 +25,8 @@ body {
 
 .material-symbols-outlined {
   color: hsl(327, 100%, 50%);
+  color: hsla(327, 100%, 50%, 0.872);
+
   font-size: 2em;
 }
 .iconBtn {

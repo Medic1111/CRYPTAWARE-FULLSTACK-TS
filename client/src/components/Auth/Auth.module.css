@@ -1,0 +1,71 @@
+.article {
+  height: 85vh;
+  width: 100%;
+  padding: 5vh 5vw;
+  background-image: url("../../assets/hero2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: opacity(80%);
+}
+
+.form {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2vh;
+}
+
+.input,
+.submit {
+  background-color: transparent;
+  border: solid hsl(327, 100%, 50%);
+  border: solid 1px hsl(327, 39%, 83%);
+  border: transparent;
+  text-align: center;
+  width: 50%;
+  height: 6vh;
+  outline: none;
+  color: hsl(327, 100%, 50%);
+  color: #f7f7f7;
+  font-size: 1.8em;
+  background-color: #f7f7f798;
+  background-color: rgba(166, 0, 255, 0.722);
+  background-color: rgba(166, 0, 255, 0.375);
+}
+.input::placeholder {
+  color: hsla(327, 100%, 50%, 0.887);
+  color: #f7f7f7;
+  padding: 0 0.3em;
+}
+
+.submit {
+  background-color: hsla(327, 100%, 50%, 0.503);
+  background-color: hsla(327, 100%, 50%, 0.71);
+
+  color: #f7f7f7;
+  cursor: pointer;
+}
+.submit:hover {
+  background-color: hsla(327, 100%, 50%, 0.868);
+}
+
+.span {
+  color: hsl(327, 100%, 50%);
+  margin-top: 1vh;
+  font-size: 1.5em;
+  cursor: pointer;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: rgb(213, 190, 226);
+}
+
+@media (max-width: 798px) {
+  .input,
+  .submit {
+    width: 90%;
+  }
+}

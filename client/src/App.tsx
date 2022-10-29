@@ -23,6 +23,10 @@ const App: React.FC = () => {
     { date: "any", value: "any" },
   ]);
 
+  useEffect(() => {
+    userMgr.isTokenExp();
+  }, [tickerMgr.ticker, tickerMgr.tickerArr]);
+
   const fetchApi = async () => {
     let cancelToken = axios.CancelToken.source();
 

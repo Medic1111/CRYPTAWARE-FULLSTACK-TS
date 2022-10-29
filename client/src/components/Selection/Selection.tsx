@@ -2,19 +2,18 @@ import classes from "./Selection.module.css";
 import { useContext, useState } from "react";
 import { TickerCtx } from "../../features/ticker-ctx";
 import { SelectionCtx } from "../../features/selection-ctx";
+import { ChartCtx } from "../../features/chart-ctx";
 
-interface Props {
-  invalid: boolean;
-}
-
-const Selection: React.FC<Props> = ({ invalid }) => {
+const Selection: React.FC = () => {
   const tickerMgr = useContext(TickerCtx);
   const selMgr = useContext(SelectionCtx);
+  const chartMgr = useContext(ChartCtx);
+
   // TEST
   const [bookmarked, setBookMarked] = useState<boolean>(false);
   return (
     <section className={classes.section}>
-      {invalid ? (
+      {chartMgr.invalid ? (
         <h2 className={classes.h2}>INVALID TICKR</h2>
       ) : (
         <h2 className={classes.h2}>

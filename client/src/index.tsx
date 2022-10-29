@@ -6,6 +6,7 @@ import TickerProvider from "./features/ticker-ctx";
 import SelectionCtxProvider from "./features/selection-ctx";
 import ModalProvider from "./features/modal-ctx";
 import AuthProvider from "./features/auth-ctx";
+import ChartProvider from "./features/chart-ctx";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -13,13 +14,15 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <ModalProvider>
-        <SelectionCtxProvider>
-          <TickerProvider>
-            <App />
-          </TickerProvider>
-        </SelectionCtxProvider>
-      </ModalProvider>
+      <ChartProvider>
+        <ModalProvider>
+          <SelectionCtxProvider>
+            <TickerProvider>
+              <App />
+            </TickerProvider>
+          </SelectionCtxProvider>
+        </ModalProvider>
+      </ChartProvider>
     </AuthProvider>
   </React.StrictMode>
 );

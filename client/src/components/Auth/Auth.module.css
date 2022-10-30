@@ -32,6 +32,7 @@
   color: hsl(327, 100%, 50%);
   color: #f7f7f7;
   font-size: 1.8em;
+  letter-spacing: 0.8px;
   background-color: #f7f7f798;
   background-color: rgba(166, 0, 255, 0.722);
   background-color: rgba(166, 0, 255, 0.375);
@@ -61,6 +62,13 @@
   font-weight: 500;
   letter-spacing: 0.5px;
   color: rgb(213, 190, 226);
+}
+.h2 {
+  color: hsl(327, 100%, 50%);
+  margin-bottom: 1vh;
+  font-size: 1.7em;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
 }
 
 @media (max-width: 798px) {

@@ -5,6 +5,14 @@ const jwt = require("jsonwebtoken");
 const registerHandler = (req, res) => {
   const { email, username, password } = req.body.user;
 
+  if (email.trim() === "" || username.trim() === "" || password.trim() === "") {
+    return res.status(400).json({ message: "All fields are required" });
+  } else if (password.length <= 5) {
+    return res
+      .status(400)
+      .json({ message: "Password must contain at least 6 characters" });
+  }
+
   User.findOne(
     { $or: [{ username: username }, { email: email }] },
     (err, doc) => {

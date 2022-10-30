@@ -73,7 +73,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     userMgr.dispatch({ type: "FETCHING" });
 
     e.preventDefault();
-    axios
+    await axios
       .post(
         `/api/v1/${url}`,
         { user: credentials },
@@ -81,7 +81,6 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       )
       .then((serverRes) => {
         setIsAuth(true);
-        console.log(serverRes.data);
         const { username, bookmarkList, notes, token } = serverRes.data;
 
         userMgr.dispatch({

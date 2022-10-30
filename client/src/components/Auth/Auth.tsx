@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useContext, useMemo } from "react";
+import React, { useContext } from "react";
 import { AuthCtx } from "../../features/auth-ctx";
 import { UserCtx } from "../../features/user-ctx";
 import classes from "./Auth.module.css";
@@ -11,7 +10,9 @@ const Auth: React.FC = () => {
   return (
     <article className={classes.article}>
       <form className={classes.form}>
-        {userMgr.state.isError && <h2>{userMgr.state.errorMsg}</h2>}
+        {userMgr.state.isError && (
+          <h2 className={classes.h2}>{userMgr.state.errorMsg}</h2>
+        )}
         {authMgr.isLoggin || (
           <input
             className={classes.input}
@@ -50,7 +51,7 @@ const Auth: React.FC = () => {
         />
         <span
           onClick={() => {
-            authMgr.resetCredentials();
+            userMgr.dispatch({ type: "CLEAR_ERROR" });
             authMgr.setIsLoggin((prev) => !prev);
           }}
           className={classes.span}

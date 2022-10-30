@@ -1,6 +1,7 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { Credentials } from "../models/Credentials";
 import axios from "axios";
+import { UserCtx } from "./user-ctx";
 
 interface Value {
   isAuth: boolean;
@@ -33,6 +34,7 @@ export const AuthCtx = createContext<Value>({
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const userMgr = useContext(UserCtx);
   const [isAuth, setIsAuth] = useState(false);
   const [isLoggin, setIsLoggin] = useState(true);
 
@@ -68,6 +70,8 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     let url: string;
     isLoggin ? (url = "login") : (url = "register");
 
+    userMgr.dispatch({ type: "FETCHING" });
+
     e.preventDefault();
     axios
       .post(
@@ -77,6 +81,13 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       )
       .then((serverRes) => {
         setIsAuth(true);
+        console.log(serverRes.data);
+        const { username, bookmarkList, notes, token } = serverRes.data;
+
+        userMgr.dispatch({
+          type: "SUCCESS",
+          payload: { username, bookmarkList, notes, token },
+        });
 
         const myExp = new Date(new Date().getTime() + 161 * 60 * 60);
         localStorage.setItem(
@@ -89,6 +100,10 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         );
       })
       .catch((err) => {
+        userMgr.dispatch({
+          type: "ERROR",
+          payload: { errorMsg: err.response.data.message },
+        });
         axios.isCancel(err)
           ? console.log("Request cancelled")
           : console.log(err);

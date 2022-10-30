@@ -6,7 +6,9 @@ const loginHandler = (req, res) => {
   const { email, username, password } = req.body.user;
   User.findOne({ username: username }, (err, doc) => {
     if (err) {
-      return res.status(500).json({ message: "Oops, something went wrong" });
+      return res
+        .status(500)
+        .json({ message: "Oops, something went wrong, try again." });
     }
 
     if (!doc) {
@@ -20,7 +22,7 @@ const loginHandler = (req, res) => {
           .json({ message: "Oops, something went wrong with your request" });
       }
       if (!match) {
-        return res.status(403).json({ message: "Not Auth" });
+        return res.status(403).json({ message: "Wrong password" });
       }
 
       let token = jwt.sign({ username }, `${process.env.TOKEN_SECRET}`, {

@@ -29,7 +29,7 @@ const registerHandler = (req, res) => {
         if (err) {
           return res
             .status(500)
-            .json({ message: "Oops, something went wrong" });
+            .json({ message: "Oops, something went wrong, please try again." });
         }
 
         let token = jwt.sign({ username }, `${process.env.TOKEN_SECRET}`, {

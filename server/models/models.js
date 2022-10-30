@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, require, unique: true },
   password: { type: String, require },
   bookmarkList: {
-    type: [{ ticker: String, bookmarked: Boolean }],
+    type: Array,
     default: [],
   },
   notes: { type: [{ title: String, content: String }], default: [] },

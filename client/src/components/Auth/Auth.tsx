@@ -1,14 +1,17 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import { AuthCtx } from "../../features/auth-ctx";
+import { UserCtx } from "../../features/user-ctx";
 import classes from "./Auth.module.css";
 
 const Auth: React.FC = () => {
   const authMgr = useContext(AuthCtx);
+  const userMgr = useContext(UserCtx);
 
   return (
     <article className={classes.article}>
       <form className={classes.form}>
+        {userMgr.state.isError && <h2>{userMgr.state.errorMsg}</h2>}
         {authMgr.isLoggin || (
           <input
             className={classes.input}

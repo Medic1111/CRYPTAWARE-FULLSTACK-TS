@@ -7,22 +7,25 @@ import SelectionCtxProvider from "./features/selection-ctx";
 import ModalProvider from "./features/modal-ctx";
 import AuthProvider from "./features/auth-ctx";
 import ChartProvider from "./features/chart-ctx";
+import UserProvider from "./features/user-ctx";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <ModalProvider>
-        <SelectionCtxProvider>
-          <TickerProvider>
-            <ChartProvider>
-              <App />
-            </ChartProvider>
-          </TickerProvider>
-        </SelectionCtxProvider>
-      </ModalProvider>
-    </AuthProvider>
+    <ModalProvider>
+      <SelectionCtxProvider>
+        <TickerProvider>
+          <UserProvider>
+            <AuthProvider>
+              <ChartProvider>
+                <App />
+              </ChartProvider>
+            </AuthProvider>
+          </UserProvider>
+        </TickerProvider>
+      </SelectionCtxProvider>
+    </ModalProvider>
   </React.StrictMode>
 );

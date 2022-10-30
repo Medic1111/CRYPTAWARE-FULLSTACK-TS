@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import { Credentials } from "../models/Credentials";
 import axios from "axios";
 import { UserCtx } from "./user-ctx";
+import { TickerCtx } from "./ticker-ctx";
 
 interface Value {
   isAuth: boolean;
@@ -35,6 +36,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const userMgr = useContext(UserCtx);
+  const tickerMgr = useContext(TickerCtx);
   const [isAuth, setIsAuth] = useState(false);
   const [isLoggin, setIsLoggin] = useState(true);
 
@@ -82,6 +84,8 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       .then((serverRes) => {
         setIsAuth(true);
         const { username, bookmarkList, notes, token } = serverRes.data;
+
+        bookmarkList.length <= 0 && tickerMgr.setTickerArr(bookmarkList);
 
         userMgr.dispatch({
           type: "SUCCESS",

@@ -14,7 +14,7 @@ export type UserActionType =
   | { type: "FETCHING" }
   | { type: "SUCCESS"; payload?: any }
   | { type: "ERROR"; payload?: any }
-  | { type: "UNLOAD" };
+  | { type: "CLEAR_ERROR" };
 
 export const UserInitState = {
   username: "",
@@ -48,6 +48,11 @@ const UserRed = (state: UserStateType, action: UserActionType) => {
         token: action.payload.token,
         notesArr: action.payload.notes,
         bookmarkArr: action.payload.bookmarkList,
+      };
+    }
+    case "CLEAR_ERROR": {
+      return {
+        ...UserInitState,
       };
     }
 

@@ -4,6 +4,14 @@ const jwt = require("jsonwebtoken");
 
 const loginHandler = (req, res) => {
   const { email, username, password } = req.body.user;
+  if (username.trim() === "" || password.trim() === "") {
+    return res.status(400).json({ message: "All fields are required" });
+  } else if (password.length <= 5) {
+    return res
+      .status(400)
+      .json({ message: "Password must contain at least 6 characters" });
+  }
+
   User.findOne({ username: username }, (err, doc) => {
     if (err) {
       return res
@@ -22,7 +30,7 @@ const loginHandler = (req, res) => {
           .json({ message: "Oops, something went wrong with your request" });
       }
       if (!match) {
-        return res.status(403).json({ message: "Wrong password" });
+        return res.status(403).json({ message: "Incorrect password" });
       }
 
       let token = jwt.sign({ username }, `${process.env.TOKEN_SECRET}`, {

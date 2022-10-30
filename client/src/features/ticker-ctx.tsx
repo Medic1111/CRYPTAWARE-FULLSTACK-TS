@@ -4,7 +4,9 @@ interface ctxValue {
   ticker: string;
   setTicker: React.Dispatch<React.SetStateAction<string>>;
   tickerArr: string[];
-  setTickerArr: React.Dispatch<React.SetStateAction<string[]>>;
+  setTickerArr: React.Dispatch<React.SetStateAction<string[] | []>>;
+  onBookmark: () => void;
+  removeBookmark: () => void;
 }
 
 export const TickerCtx = createContext<ctxValue>({
@@ -12,20 +14,27 @@ export const TickerCtx = createContext<ctxValue>({
   setTicker: () => {},
   tickerArr: [],
   setTickerArr: () => {},
+  onBookmark: () => {},
+  removeBookmark: () => {},
 });
 
 const TickerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [ticker, setTicker] = useState<string>("BTC");
-  const [tickerArr, setTickerArr] = useState<string[]>([
-    "BTC",
-    "ETH",
-    "BNB",
-    "SOL",
-    "ADA",
-    "DOGE",
-  ]);
+  const [tickerArr, setTickerArr] = useState<string[] | []>([]);
+
+  const onBookmark = () => {
+    setTickerArr((prev) => [...prev, ticker]);
+  };
+
+  const removeBookmark = () => {
+    setTickerArr((prev) => {
+      return prev.filter((el) => {
+        return el !== ticker;
+      });
+    });
+  };
 
   return (
     <TickerCtx.Provider
@@ -34,6 +43,8 @@ const TickerProvider: React.FC<{ children: React.ReactNode }> = ({
         setTicker: setTicker,
         tickerArr,
         setTickerArr,
+        onBookmark,
+        removeBookmark,
       }}
     >
       {children}

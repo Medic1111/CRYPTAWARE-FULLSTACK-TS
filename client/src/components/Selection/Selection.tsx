@@ -59,7 +59,11 @@ const Selection: React.FC = () => {
           C
         </p>
         <span
-          onClick={() => setBookMarked((prev) => !prev)}
+          onClick={() => {
+            console.log(tickerMgr.ticker);
+            bookmarked ? tickerMgr.removeBookmark() : tickerMgr.onBookmark();
+            setBookMarked((prev) => !prev);
+          }}
           className="material-symbols-outlined iconSelection"
         >
           {bookmarked ? "bookmark_added" : "bookmark_add"}

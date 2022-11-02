@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState } from "react";
 import { dataArrInterface } from "../models/AppInterface";
 import axios from "axios";
 import { TickerCtx } from "./ticker-ctx";
-import { UserCtx } from "./user-ctx";
 
 interface Value {
   invalid: boolean;
@@ -23,7 +22,6 @@ export const ChartCtx = createContext<Value>({
 const ChartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const userMgr = useContext(UserCtx);
   const tickerMgr = useContext(TickerCtx);
 
   const [invalid, setInvalid] = useState<boolean>(false);
@@ -32,6 +30,7 @@ const ChartProvider: React.FC<{ children: React.ReactNode }> = ({
   ]);
 
   const fetchApi = async () => {
+    setInvalid(false);
     let cancelToken = axios.CancelToken.source();
     await axios
       .get(`/api/v1/${tickerMgr.ticker}`, { cancelToken: cancelToken.token })

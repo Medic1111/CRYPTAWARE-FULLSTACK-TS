@@ -21,8 +21,6 @@ export const ModalState = {
 const ModalRed = (state: ModalStateType, action: ModalActionType) => {
   switch (action.type) {
     case "BOOKMARK": {
-      console.log("book");
-
       return {
         ...ModalState,
         showModal: true,
@@ -30,8 +28,6 @@ const ModalRed = (state: ModalStateType, action: ModalActionType) => {
       };
     }
     case "NOTES": {
-      console.log("notes");
-
       return {
         ...ModalState,
         showModal: true,
@@ -39,7 +35,6 @@ const ModalRed = (state: ModalStateType, action: ModalActionType) => {
       };
     }
     case "SEARCH": {
-      console.log("search");
       return {
         ...ModalState,
         showModal: true,
@@ -47,8 +42,6 @@ const ModalRed = (state: ModalStateType, action: ModalActionType) => {
       };
     }
     case "CLOSE": {
-      console.log("close");
-
       return { ...ModalState };
     }
     default:

@@ -85,7 +85,11 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         setIsAuth(true);
         const { username, bookmarkList, notes, token } = serverRes.data;
 
-        bookmarkList.length <= 0 && tickerMgr.setTickerArr(bookmarkList);
+        if (bookmarkList.length >= 1) {
+          tickerMgr.setTickerArr(bookmarkList);
+          tickerMgr.setTicker(bookmarkList[0]);
+          tickerMgr.setBookMarked(true);
+        }
 
         userMgr.dispatch({
           type: "SUCCESS",

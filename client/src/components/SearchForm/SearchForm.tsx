@@ -8,6 +8,7 @@ const SearchForm: React.FC = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    !tickerMgr.bookMarked && tickerMgr.setBookMarked(false);
     tickerMgr.setTicker(userInput);
     setUserInput("");
   };

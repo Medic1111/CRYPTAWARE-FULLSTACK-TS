@@ -13,6 +13,7 @@ const SearchModalForm: React.FC = () => {
   ) => {
     e.preventDefault();
     tickerMgr.setTicker(userInput);
+    !tickerMgr.bookMarked && tickerMgr.setBookMarked(false);
     modalMgr.dispatch({ type: "CLOSE" });
   };
 

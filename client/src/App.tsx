@@ -22,11 +22,11 @@ const App: React.FC = () => {
 
   useEffect(() => {
     authMgr.isTokenExp();
-  }, [tickerMgr.ticker, tickerMgr.tickerArr]);
+  }, [tickerMgr.ticker]);
 
   useEffect(() => {
     chartMgr.fetchApi();
-  }, [tickerMgr.ticker]);
+  }, [tickerMgr.ticker, modalMgr.state.search]);
 
   return (
     <React.Fragment>

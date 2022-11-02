@@ -9,7 +9,7 @@ const OptionsBox: React.FC = () => {
   return (
     <article className={classes.article}>
       {tickerMgr.tickerArr.map((el, index) => {
-        return <Options key={`option_${index}`} value={el} />;
+        return <Options key={`option_${index}`} value={el.toUpperCase()} />;
       })}
     </article>
   );

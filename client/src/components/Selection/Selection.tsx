@@ -1,5 +1,5 @@
 import classes from "./Selection.module.css";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { TickerCtx } from "../../features/ticker-ctx";
 import { SelectionCtx } from "../../features/selection-ctx";
 import { ChartCtx } from "../../features/chart-ctx";
@@ -9,8 +9,6 @@ const Selection: React.FC = () => {
   const selMgr = useContext(SelectionCtx);
   const chartMgr = useContext(ChartCtx);
 
-  // TEST
-  const [bookmarked, setBookMarked] = useState<boolean>(false);
   return (
     <section className={classes.section}>
       {chartMgr.invalid ? (
@@ -60,13 +58,14 @@ const Selection: React.FC = () => {
         </p>
         <span
           onClick={() => {
-            console.log(tickerMgr.ticker);
-            bookmarked ? tickerMgr.removeBookmark() : tickerMgr.onBookmark();
-            setBookMarked((prev) => !prev);
+            tickerMgr.setBookMarked((prev) => !prev);
+            tickerMgr.bookMarked
+              ? tickerMgr.removeBookmark()
+              : tickerMgr.onBookmark();
           }}
           className="material-symbols-outlined iconSelection"
         >
-          {bookmarked ? "bookmark_added" : "bookmark_add"}
+          {tickerMgr.bookMarked ? "bookmark_added" : "bookmark_add"}
         </span>
       </div>
     </section>

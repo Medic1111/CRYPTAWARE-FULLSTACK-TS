@@ -8,7 +8,10 @@ interface Props {
 
 const Options: React.FC<Props> = ({ value }) => {
   const tickerMgr = useContext(TickerCtx);
-  const resetTicker = () => tickerMgr.setTicker(value);
+  const resetTicker = () => {
+    tickerMgr.setBookMarked(true);
+    tickerMgr.setTicker(value);
+  };
   return (
     <button onClick={resetTicker} className={classes.btn}>
       <span className={classes.span}> {value}</span>

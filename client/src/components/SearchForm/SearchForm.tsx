@@ -8,7 +8,18 @@ const SearchForm: React.FC = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    !tickerMgr.bookMarked && tickerMgr.setBookMarked(false);
+
+    let itsAlreadyThere = tickerMgr.tickerArr.find(
+      (el) => el.toUpperCase() === userInput.toUpperCase()
+    );
+
+    if (itsAlreadyThere) {
+      tickerMgr.setBookMarked(true);
+      tickerMgr.setTicker(userInput);
+      return;
+    }
+
+    tickerMgr.bookMarked && tickerMgr.setBookMarked(false);
     tickerMgr.setTicker(userInput);
     setUserInput("");
   };

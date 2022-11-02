@@ -12,8 +12,20 @@ const SearchModalForm: React.FC = () => {
     e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
+
+    let itsAlreadyThere = tickerMgr.tickerArr.find(
+      (el) => el.toUpperCase() === userInput.toUpperCase()
+    );
+
+    if (itsAlreadyThere) {
+      tickerMgr.setBookMarked(true);
+      modalMgr.dispatch({ type: "CLOSE" });
+      tickerMgr.setTicker(userInput);
+      return;
+    }
+
     tickerMgr.setTicker(userInput);
-    !tickerMgr.bookMarked && tickerMgr.setBookMarked(false);
+    tickerMgr.bookMarked && tickerMgr.setBookMarked(false);
     modalMgr.dispatch({ type: "CLOSE" });
   };
 

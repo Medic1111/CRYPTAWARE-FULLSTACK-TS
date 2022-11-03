@@ -1,12 +1,31 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ModalCtx } from "../../features/modal-ctx";
 import { AuthCtx } from "../../features/auth-ctx";
 import SearchForm from "../SearchForm/SearchForm";
 import classes from "./Header.module.css";
+import axios from "axios";
 
 const Header: React.FC = () => {
   const modalMgr = useContext(ModalCtx);
   const authMgr = useContext(AuthCtx);
+
+  const fetchNews = async () => {
+    if (modalMgr.news.length >= 1) {
+      return;
+    }
+
+    await axios
+      .get(
+        `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=COIN,CRYPTO:BTC,FOREX:USD&limit=50&apikey=${process.env.REACT_APP_API_KEY}`
+      )
+      .then((serverRes) => {
+        console.log(serverRes.data.feed);
+        return modalMgr.setNews(serverRes.data.feed);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <header className={classes.header}>
       <h1 className={classes.h1}>CRYPTAWARE</h1>
@@ -28,7 +47,12 @@ const Header: React.FC = () => {
             bookmark
           </span> */}
           <span
-            onClick={() => modalMgr.dispatch({ type: "NOTES" })}
+            onClick={() => {
+              modalMgr.state.notes
+                ? modalMgr.dispatch({ type: "CLOSE" })
+                : modalMgr.dispatch({ type: "NOTES" });
+              return fetchNews();
+            }}
             className="material-symbols-outlined iconBtn"
           >
             sticky_note_2

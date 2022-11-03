@@ -38,9 +38,6 @@
 .mobile {
   display: none;
 }
-/* .mobile:hover {
-  color: rgb(239, 234, 243);
-} */
 
 @media (max-width: 798px) {
   .h2 {

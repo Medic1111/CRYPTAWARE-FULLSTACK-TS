@@ -42,7 +42,6 @@ const UserRed = (state: UserStateType, action: UserActionType) => {
       };
     }
     case "SUCCESS": {
-      console.log(action.payload.username);
       return {
         ...UserInitState,
         username: action.payload.username,

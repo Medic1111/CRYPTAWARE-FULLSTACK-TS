@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { ModalCtx } from "../../features/modal-ctx";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
-import Wrapper from "../Wrapper/Wrapper";
 import classes from "./Bookmark.module.css";
 
 const Bookmark: React.FC = () => {

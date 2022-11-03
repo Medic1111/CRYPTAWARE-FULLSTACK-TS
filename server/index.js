@@ -22,68 +22,17 @@ db_connection();
 const fetchRoute = require("./routes/fetch");
 const loginRoute = require("./routes/login");
 const registerRoute = require("./routes/register");
+const addBookRoute = require("./routes/add_book");
 
 // PERSONAL Middlewares
 app.use("/", fetchRoute);
 app.use("/", loginRoute);
 app.use("/", registerRoute);
+app.use("/", addBookRoute);
 
 // DEV TESTING:
 
-// ADD
-
-app.post("/api/:username/bookmark", (req, res) => {
-  const username = req.params.username;
-  const ticker = req.body.ticker;
-  console.log(ticker);
-
-  verificationHandler(req, res);
-
-  try {
-    User.find({ username: username }, async (err, doc) => {
-      err && console.log(err);
-
-      await doc[0].bookmarkList.unshift(ticker);
-
-      await doc[0].save((err, updateUser) => {
-        err ? console.log(err) : res.status(200).json(updateUser.bookmarkList);
-      });
-    });
-  } catch {
-    console.log("Invalid token");
-  }
-});
-
 // REMOVE
-
-app.patch("/api/:username/bookmark", (req, res) => {
-  const username = req.params.username;
-  const ticker = req.body.ticker;
-  console.log(ticker);
-
-  verificationHandler(req, res);
-
-  try {
-    User.find({ username: username }, async (err, doc) => {
-      err && console.log(err);
-      console.log(doc[0].bookmarkList);
-
-      doc[0].bookmarkList = await doc[0].bookmarkList.filter(
-        (tickerToFind) => tickerToFind !== ticker
-      );
-      console.log(doc[0].bookmarkList);
-
-      await doc[0].save((err, updateUser) => {
-        console.log(updateUser.bookmarkList);
-        err ? console.log(err) : res.status(200).json(updateUser.bookmarkList);
-      });
-    });
-  } catch {
-    console.log("Invalid token");
-  }
-
-  //
-});
 
 // UNIVERSAL
 app.get("*", (req, res) => {

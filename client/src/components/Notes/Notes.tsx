@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import { ModalCtx } from "../../features/modal-ctx";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
@@ -10,10 +11,20 @@ const Notes: React.FC = () => {
   return (
     <>
       <Header />
-      <h1 className={classes.test}>This is the Notes</h1>
-      <button onClick={() => modalMgr.dispatch({ type: "CLOSE" })}>
-        Close
-      </button>
+      <ul className={classes.ul}>
+        {modalMgr.news.map((obj, index) => {
+          return (
+            <li className={classes.li}>
+              <h2 className={classes.h2}>{obj.title}</h2>
+              <img className={classes.img} src={obj.banner_image} />
+              <p className={classes.p}>{obj.summary}</p>
+              <a className={classes.a} target="__blank" href={obj.url}>
+                Read more
+              </a>
+            </li>
+          );
+        })}
+      </ul>
       <Footer />
     </>
   );

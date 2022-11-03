@@ -1,6 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useState } from "react";
-import { UserCtx } from "./user-ctx";
+import { createContext, useState } from "react";
 
 interface ctxValue {
   ticker: string;
@@ -89,7 +88,6 @@ const TickerProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       )
       .then((serverRes) => {
-        console.log(serverRes.data);
         setTickerArr((prev) => {
           return prev.filter((el) => {
             return el.toUpperCase() !== ticker.toUpperCase();

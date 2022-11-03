@@ -21,12 +21,12 @@ const Header: React.FC = () => {
           >
             <span className="material-symbols-outlined">search</span>
           </button>
-          <span
+          {/* <span
             onClick={() => modalMgr.dispatch({ type: "BOOKMARK" })}
             className="material-symbols-outlined iconBtn"
           >
             bookmark
-          </span>
+          </span> */}
           <span
             onClick={() => modalMgr.dispatch({ type: "NOTES" })}
             className="material-symbols-outlined iconBtn"

@@ -4,7 +4,8 @@
 
 .ul {
   background-color: transparent;
-  height: 80vh;
+  height: 85vh;
+  width: 100%;
   overflow-y: scroll;
   display: flex;
   justify-content: flex-start;
@@ -57,4 +58,38 @@
   width: 50%;
   border-radius: 5px;
   margin: 1vh 0;
+}
+
+.li {
+  background-color: rgba(79, 53, 125, 0.207);
+  border-left: #9324ce solid;
+  border-radius: 0 5px 5px 0;
+  flex-direction: unset;
+  justify-content: space-between;
+  align-items: center;
+}
+.txtBox {
+  width: 70%;
+}
+.p,
+.h2 {
+  width: unset;
+}
+
+.a {
+  text-align: center;
+  display: block;
+}
+.img {
+  width: 30%;
+  border-radius: 5px;
+  margin: 1vh 0;
+}
+
+@media (max-width: 798px) {
+  .li {
+    flex-direction: column;
+    width: 90%;
+    padding: 2.5vh 0;
+  }
 }

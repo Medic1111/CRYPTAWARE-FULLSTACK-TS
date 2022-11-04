@@ -23,12 +23,14 @@ const fetchRoute = require("./routes/fetch");
 const loginRoute = require("./routes/login");
 const registerRoute = require("./routes/register");
 const addBookRoute = require("./routes/add_book");
+const remBookRoute = require("./routes/rem_book");
 
 // PERSONAL Middlewares
 app.use("/", fetchRoute);
 app.use("/", loginRoute);
 app.use("/", registerRoute);
 app.use("/", addBookRoute);
+app.use("/", remBookRoute);
 
 // DEV TESTING:
 

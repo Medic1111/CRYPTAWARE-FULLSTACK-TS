@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ModalCtx } from "../../features/modal-ctx";
 import { AuthCtx } from "../../features/auth-ctx";
 import SearchForm from "../SearchForm/SearchForm";
@@ -19,7 +19,6 @@ const Header: React.FC = () => {
         `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=COIN,CRYPTO:BTC,FOREX:USD&limit=50&apikey=${process.env.REACT_APP_API_KEY}`
       )
       .then((serverRes) => {
-        console.log(serverRes.data.feed);
         return modalMgr.setNews(serverRes.data.feed);
       })
       .catch((err) => {

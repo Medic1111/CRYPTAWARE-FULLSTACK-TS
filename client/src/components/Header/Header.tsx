@@ -14,16 +14,20 @@ const Header: React.FC = () => {
       return;
     }
 
+    const cancelToken = axios.CancelToken.source();
+
     await axios
-      .get(
-        `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=COIN,CRYPTO:BTC,FOREX:USD&limit=50&apikey=${process.env.REACT_APP_API_KEY}`
-      )
+      .get("/api/v1/news/crypto", { cancelToken: cancelToken.token })
       .then((serverRes) => {
-        return modalMgr.setNews(serverRes.data.feed);
+        return modalMgr.setNews(serverRes.data);
       })
       .catch((err) => {
-        console.log(err);
+        axios.isCancel(err)
+          ? console.log("Request cancelled")
+          : console.log(err);
       });
+
+    return cancelToken.cancel();
   };
   return (
     <header className={classes.header}>
@@ -57,7 +61,10 @@ const Header: React.FC = () => {
             sticky_note_2
           </span>
           <span
-            onClick={() => authMgr.logout()}
+            onClick={() => {
+              authMgr.logout();
+              modalMgr.dispatch({ type: "CLOSE" });
+            }}
             className="material-symbols-outlined iconBtn"
           >
             logout

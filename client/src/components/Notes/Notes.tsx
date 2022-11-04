@@ -13,15 +13,6 @@ const Notes: React.FC = () => {
       <ul className={classes.ul}>
         {modalMgr.news.map((obj, index) => {
           return (
-            // <li key={`NEWS_${index}`} className={classes.li}>
-            //   <h2 className={classes.h2}>{obj.title}</h2>
-            //   <img className={classes.img} src={obj.banner_image} />
-            //   <p className={classes.p}>{obj.summary}</p>
-            //   <a className={classes.a} target="__blank" href={obj.url}>
-            //     Read more
-            //   </a>
-            // </li>
-            // TEST
             <li key={`NEWS_${index}`} className={classes.li}>
               <img className={classes.img} src={obj.banner_image} />
               <div className={classes.txtBox}>

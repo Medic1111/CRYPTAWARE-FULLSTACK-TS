@@ -45,7 +45,6 @@ const loginHandler = (req, res) => {
       });
     });
   });
-  //
 };
 
 module.exports = { loginHandler };

@@ -16,7 +16,6 @@ const remBookController = (req, res) => {
       );
 
       await doc[0].save((err, updateUser) => {
-        console.log(updateUser.bookmarkList);
         err ? console.log(err) : res.status(200).json(updateUser.bookmarkList);
       });
     });

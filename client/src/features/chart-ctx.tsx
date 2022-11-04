@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 import { dataArrInterface } from "../models/AppInterface";
 import axios from "axios";
 import { TickerCtx } from "./ticker-ctx";
+import { ModalCtx } from "./modal-ctx";
 
 interface Value {
   invalid: boolean;
@@ -23,6 +24,7 @@ const ChartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const tickerMgr = useContext(TickerCtx);
+  const modalMgr = useContext(ModalCtx);
 
   const [invalid, setInvalid] = useState<boolean>(false);
   const [dataArr, setDataArr] = useState<dataArrInterface[]>([
@@ -30,18 +32,22 @@ const ChartProvider: React.FC<{ children: React.ReactNode }> = ({
   ]);
 
   const fetchApi = async () => {
+    modalMgr.dispatch({ type: "LOADING" });
     setInvalid(false);
     let cancelToken = axios.CancelToken.source();
     await axios
       .get(`/api/v1/${tickerMgr.ticker}`, { cancelToken: cancelToken.token })
       .then((serverRes) => {
         setDataArr(serverRes.data);
+        modalMgr.dispatch({ type: "CLOSE" });
       })
       .catch((err) => {
         axios.isCancel(err)
           ? console.log("Request cancelled")
           : console.log(err);
         setDataArr([]);
+        modalMgr.dispatch({ type: "CLOSE" });
+
         return setInvalid(true);
       });
 

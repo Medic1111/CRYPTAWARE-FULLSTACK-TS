@@ -40,11 +40,9 @@ app.get("/api/v1/news/crypto", async (req, res) => {
       `https://www.alphavantage.co/query?function=NEWS_SENTIMENT&tickers=COIN,CRYPTO:BTC,FOREX:USD&limit=50&apikey=${process.env.REACT_APP_API_KEY}`
     )
     .then((serverRes) => {
-      // return modalMgr.setNews(serverRes.data.feed);
       res.status(200).json(serverRes.data.feed);
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).json({ message: "Alphavantage let us down..." });
     });
 });

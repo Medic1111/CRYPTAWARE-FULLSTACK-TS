@@ -1,5 +1,6 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { ModalCtx } from "./modal-ctx";
 
 interface ctxValue {
   ticker: string;
@@ -29,6 +30,7 @@ const TickerProvider: React.FC<{ children: React.ReactNode }> = ({
   const [ticker, setTicker] = useState<string>("BTC");
   const [tickerArr, setTickerArr] = useState<string[] | []>([]);
   const [bookMarked, setBookMarked] = useState<boolean>(false);
+  const modalMgr = useContext(ModalCtx);
 
   const onBookmark = async () => {
     const storedData = localStorage.getItem("userValidation");
@@ -44,6 +46,8 @@ const TickerProvider: React.FC<{ children: React.ReactNode }> = ({
     const cancelToken = axios.CancelToken.source();
     let tickerToUp: string = ticker.toUpperCase();
 
+    modalMgr.dispatch({ type: "LOADING" });
+
     await axios
       .post(
         `/api/${username}/bookmark`,
@@ -55,11 +59,13 @@ const TickerProvider: React.FC<{ children: React.ReactNode }> = ({
       )
       .then((serverRes) => {
         setTickerArr((prev) => [...prev, ticker.toUpperCase()]);
+        modalMgr.dispatch({ type: "CLOSE" });
       })
       .catch((err) => {
         axios.isCancel(err)
           ? console.log("Request cancelled")
           : console.log(err.response);
+        modalMgr.dispatch({ type: "CLOSE" });
       });
 
     return cancelToken.cancel();
@@ -69,6 +75,8 @@ const TickerProvider: React.FC<{ children: React.ReactNode }> = ({
     const storedData = localStorage.getItem("userValidation");
     let username: string = "";
     let token: string = "";
+
+    modalMgr.dispatch({ type: "LOADING" });
 
     if (typeof storedData === "string") {
       const parse = await JSON.parse(storedData);
@@ -88,6 +96,8 @@ const TickerProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       )
       .then((serverRes) => {
+        modalMgr.dispatch({ type: "CLOSE" });
+
         setTickerArr((prev) => {
           return prev.filter((el) => {
             return el.toUpperCase() !== ticker.toUpperCase();
@@ -95,6 +105,8 @@ const TickerProvider: React.FC<{ children: React.ReactNode }> = ({
         });
       })
       .catch((err) => {
+        modalMgr.dispatch({ type: "CLOSE" });
+
         axios.isCancel(err)
           ? console.log("Request cancelled")
           : console.log(err.response);

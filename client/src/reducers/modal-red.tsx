@@ -1,30 +1,30 @@
 export type ModalActionType =
   | { type: "CLOSE" }
-  | { type: "BOOKMARK" }
+  | { type: "LOADING" }
   | { type: "NOTES" }
   | { type: "SEARCH" };
 
 export type ModalStateType = {
   showModal: boolean;
-  bookmark: boolean;
+  loading: boolean;
   notes: boolean;
   search: boolean;
 };
 
 export const ModalState = {
   showModal: false,
-  bookmark: false,
+  loading: false,
   notes: false,
   search: false,
 };
 
 const ModalRed = (state: ModalStateType, action: ModalActionType) => {
   switch (action.type) {
-    case "BOOKMARK": {
+    case "LOADING": {
       return {
         ...ModalState,
         showModal: true,
-        bookmark: true,
+        loading: true,
       };
     }
     case "NOTES": {

@@ -14,14 +14,20 @@ const Header: React.FC = () => {
       return;
     }
 
+    modalMgr.dispatch({ type: "LOADING" });
+
     const cancelToken = axios.CancelToken.source();
 
     await axios
       .get("/api/v1/news/crypto", { cancelToken: cancelToken.token })
       .then((serverRes) => {
+        modalMgr.dispatch({ type: "NOTES" });
+
         return modalMgr.setNews(serverRes.data);
       })
       .catch((err) => {
+        modalMgr.dispatch({ type: "NOTES" });
+
         axios.isCancel(err)
           ? console.log("Request cancelled")
           : console.log(err);
@@ -43,12 +49,7 @@ const Header: React.FC = () => {
           >
             <span className="material-symbols-outlined">search</span>
           </button>
-          {/* <span
-            onClick={() => modalMgr.dispatch({ type: "BOOKMARK" })}
-            className="material-symbols-outlined iconBtn"
-          >
-            bookmark
-          </span> */}
+
           <span
             onClick={() => {
               modalMgr.state.notes

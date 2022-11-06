@@ -21,6 +21,8 @@ Crypto-currency tracker build with React in Typescript. User may search for the 
 - [Run with it](#run-with-it)
 - [Developer](#developer)
 
+---
+
 ### TECH
 
 - Client

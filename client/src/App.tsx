@@ -11,14 +11,12 @@ import { ModalCtx } from "./features/modal-ctx";
 import { AuthCtx } from "./features/auth-ctx";
 import Auth from "./components/Auth/Auth";
 import { ChartCtx } from "./features/chart-ctx";
-import { UserCtx } from "./features/user-ctx";
 
 const App: React.FC = () => {
   const tickerMgr = useContext(TickerCtx);
   const modalMgr = useContext(ModalCtx);
   const authMgr = useContext(AuthCtx);
   const chartMgr = useContext(ChartCtx);
-  const userMgr = useContext(UserCtx);
 
   useEffect(() => {
     authMgr.isTokenExp();
@@ -26,30 +24,25 @@ const App: React.FC = () => {
 
   useEffect(() => {
     chartMgr.fetchApi();
-  }, [tickerMgr.ticker, modalMgr.state.search]);
+  }, [tickerMgr.ticker]);
 
   return (
     <React.Fragment>
       {modalMgr.state.showModal && <Modal />}
-      {userMgr.state.loading ? (
-        <h1>LOADING</h1>
-      ) : (
-        <>
-          <Header />
-          <Wrapper>
-            {authMgr.isAuth ? (
-              <>
-                <OptionsBox />
-                <Selection />
-                <Chart />
-              </>
-            ) : (
-              <Auth />
-            )}
-          </Wrapper>
-          <Footer />
-        </>
-      )}
+
+      <Header />
+      <Wrapper>
+        {authMgr.isAuth ? (
+          <>
+            <OptionsBox />
+            <Selection />
+            <Chart />
+          </>
+        ) : (
+          <Auth />
+        )}
+      </Wrapper>
+      <Footer />
     </React.Fragment>
   );
 };

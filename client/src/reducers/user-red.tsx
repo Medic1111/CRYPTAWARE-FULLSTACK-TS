@@ -1,10 +1,7 @@
-import { NotesInt } from "../models/NotesInter";
-
 export type UserStateType = {
   username: string;
   token: string;
   bookmarkArr: string[] | [];
-  notesArr: NotesInt[] | [];
   loading: boolean;
   isError: boolean;
   errorMsg: string;
@@ -20,7 +17,6 @@ export const UserInitState = {
   username: "",
   token: "",
   bookmarkArr: [],
-  notesArr: [],
   loading: false,
   isError: false,
   errorMsg: "",

@@ -35,6 +35,7 @@ const ModalRed = (state: ModalStateType, action: ModalActionType) => {
       };
     }
     case "SEARCH": {
+      console.log("Opening Search");
       return {
         ...ModalState,
         showModal: true,
@@ -42,6 +43,7 @@ const ModalRed = (state: ModalStateType, action: ModalActionType) => {
       };
     }
     case "CLOSE": {
+      console.log("Closing");
       return { ...ModalState };
     }
     default:

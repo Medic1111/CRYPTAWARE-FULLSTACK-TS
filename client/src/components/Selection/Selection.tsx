@@ -8,54 +8,41 @@ const Selection: React.FC = () => {
   const tickerMgr = useContext(TickerCtx);
   const selMgr = useContext(SelectionCtx);
   const chartMgr = useContext(ChartCtx);
+  const mapThis = ["TREND", "DIFF", "COMPOUND"];
 
   return (
     <section className={classes.section}>
-      {chartMgr.invalid ? (
-        <h2 className={classes.h2}>INVALID TICKR</h2>
-      ) : (
-        <h2 className={classes.h2}>
-          {tickerMgr.ticker} {new Date().toISOString().slice(5, 10)}
-        </h2>
-      )}
+      <h2 className={classes.h2}>
+        {chartMgr.invalid
+          ? "INVALID TICKR"
+          : tickerMgr.ticker + " " + new Date().toISOString().slice(5, 10)}
+      </h2>
 
       <div className={classes.filterBox}>
-        <p
-          onClick={() => selMgr.SelDispatch({ type: "TREND" })}
-          className={classes.p}
-        >
-          TREND
-        </p>
-        <p
-          onClick={() => selMgr.SelDispatch({ type: "TREND" })}
-          className={classes.mobile}
-        >
-          T
-        </p>
-        <p
-          onClick={() => selMgr.SelDispatch({ type: "DIFF" })}
-          className={classes.p}
-        >
-          DIFF
-        </p>
-        <p
-          onClick={() => selMgr.SelDispatch({ type: "DIFF" })}
-          className={classes.mobile}
-        >
-          D
-        </p>
-        <p
-          onClick={() => selMgr.SelDispatch({ type: "COMPOUND" })}
-          className={classes.p}
-        >
-          COMPOUND
-        </p>
-        <p
-          onClick={() => selMgr.SelDispatch({ type: "COMPOUND" })}
-          className={classes.mobile}
-        >
-          C
-        </p>
+        {mapThis.map((el, index) => {
+          let execute = () => {
+            switch (index) {
+              case 0:
+                return selMgr.SelDispatch({ type: "TREND" });
+              case 1:
+                return selMgr.SelDispatch({ type: "DIFF" });
+              case 2:
+                return selMgr.SelDispatch({ type: "COMPOUND" });
+              default:
+                return selMgr.SelDispatch({ type: "COMPOUND" });
+            }
+          };
+          return (
+            <>
+              <p onClick={() => execute()} className={classes.p}>
+                {el}
+              </p>
+              <p onClick={() => execute()} className={classes.mobile}>
+                {el.slice(0, 1)}
+              </p>
+            </>
+          );
+        })}
         <span
           onClick={() => {
             tickerMgr.setBookMarked((prev) => !prev);

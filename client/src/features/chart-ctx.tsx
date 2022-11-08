@@ -39,6 +39,7 @@ const ChartProvider: React.FC<{ children: React.ReactNode }> = ({
       .get(`/api/v1/${tickerMgr.ticker}`, { cancelToken: cancelToken.token })
       .then((serverRes) => {
         setDataArr(serverRes.data);
+        console.log(serverRes.data);
         modalMgr.dispatch({ type: "CLOSE" });
       })
       .catch((err) => {

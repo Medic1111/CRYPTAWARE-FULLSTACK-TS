@@ -2,7 +2,7 @@
 
 ---
 
-[Dev is live here](https://cryptaware.onrender.com/)
+[Dev is live here](https://cryptaware-u94a.onrender.com/)
 
 ---
 
